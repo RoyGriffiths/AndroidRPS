@@ -9,4 +9,9 @@ public class ToGame : MonoBehaviour
     {
         SceneManager.LoadScene("SampleScene");
     }
+
+    public void toMain()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
 }

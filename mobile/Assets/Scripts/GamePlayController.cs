@@ -21,6 +21,9 @@ public class GamePlayController : MonoBehaviour{
     [SerializeField]
     private Text infoText;
 
+    [SerializeField]
+    private Text scoreText;
+
     private GameChoices player_Choice = GameChoices.NONE, opponent_Choice = GameChoices.NONE;
 
     private AnimationController animationController; 
@@ -51,7 +54,26 @@ public class GamePlayController : MonoBehaviour{
 
         SetOpponentChoice();
 
-        DetermineWinner();
+        SetScore(DetermineWinner());
+    }
+
+    void SetScore(int outcome){
+
+        int x  = System.Convert.ToInt32(scoreText.text);
+        
+        if(outcome == 0){
+            
+        }
+
+        if(outcome == 1){
+            x += 1;
+            scoreText.text = x.ToString();
+        }
+
+        if(outcome == 2){
+            x = 0;
+            scoreText.text = x.ToString();
+        }
     }
 
     void SetOpponentChoice(){
@@ -76,56 +98,57 @@ public class GamePlayController : MonoBehaviour{
         }
     }
 
-    void DetermineWinner(){
+    int DetermineWinner(){
         if(player_Choice == opponent_Choice){
             infoText.text = "Draw!";
             StartCoroutine(DisplayWinnerAndRestart());
 
-            return;
+            return 0;
         }
 
         if(player_Choice == GameChoices.PAPER && opponent_Choice == GameChoices.ROCK){
             infoText.text = "You Win!";
             StartCoroutine(DisplayWinnerAndRestart());
 
-            return;
+            return 1;
         }
 
         if(opponent_Choice == GameChoices.PAPER && player_Choice == GameChoices.ROCK){
             infoText.text = "You Lose!";
             StartCoroutine(DisplayWinnerAndRestart());
 
-            return;
+            return 2;
         }
 
         if(player_Choice == GameChoices.ROCK && opponent_Choice == GameChoices.SCISSORS){
             infoText.text = "You Win!";
             StartCoroutine(DisplayWinnerAndRestart());
 
-            return;
+            return 1;
         }
 
         if(opponent_Choice == GameChoices.ROCK && player_Choice == GameChoices.SCISSORS){
             infoText.text = "You Lose!";
             StartCoroutine(DisplayWinnerAndRestart());
 
-            return;
+            return 2;
         }
 
         if(player_Choice == GameChoices.SCISSORS && opponent_Choice == GameChoices.PAPER){
             infoText.text = "You Win!";
             StartCoroutine(DisplayWinnerAndRestart());
 
-            return;
+            return 1;
         }
 
         if(opponent_Choice == GameChoices.SCISSORS && player_Choice == GameChoices.PAPER){
             infoText.text = "You Lose!";
             StartCoroutine(DisplayWinnerAndRestart());
 
-            return;
+            return 2;
         }
 
+        return 3;
     }
 
     IEnumerator DisplayWinnerAndRestart(){
